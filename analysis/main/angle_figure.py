@@ -422,7 +422,7 @@ def make_supple_figure(nf_dict, emp_dict, roi_names_2line, all_subIDs, out_png):
     make_noise_legend(ax_top, pilot_ids, sid2marker, loc='upper right', ncol=len(pilot_ids))
     make_noise_legend(ax_bot, new_ids, sid2marker, loc='upper right', ncol=len(new_ids))
 
-    fig.supylabel("Angle between P and WM coding axes (deg)", y=0.63)
+    fig.supylabel("Angle between coding axes for encoding and maintenance (deg)", y=0.63)
 
     fig.tight_layout()
     fig.savefig(out_png, bbox_inches="tight", dpi=300)

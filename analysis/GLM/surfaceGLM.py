@@ -131,11 +131,11 @@ print(dm0)
 # =========================
 dm_plot = dm0.copy()
 dm_plot.columns = [
-    "Face Perception",
-    "Scene Perception",
+    "Face Encoding",
+    "Scene Encoding",
     "Test",
-    "Face Working Memory",
-    "Scene Working Memory",
+    "Face Maintenance",
+    "Scene Maintenance",
     "Translation(x)",
     "Translation(y)",
     "Translation(z)",

@@ -143,8 +143,8 @@ def main():
     offset = 0.18
     width = 0.30
 
-    ax.bar(x - offset, meanP, width, color="#F58518", alpha=0.8, label="Face vs. Scene (Perception)")
-    ax.bar(x + offset, meanWM, width, color="#4C78A8", alpha=0.8, label="Face vs. Scene (Working Memory)")
+    ax.bar(x - offset, meanP, width, color="#F58518", alpha=0.8, label="Face vs. Scene (Encoding)")
+    ax.bar(x + offset, meanWM, width, color="#4C78A8", alpha=0.8, label="Face vs. Scene (Maintenance)")
 
     jitter = 0.03
     for i in range(n_roi):
@@ -198,8 +198,8 @@ def main():
             )
 
     legend_elems = [
-        Patch(facecolor="#F58518", alpha=0.8, label="Face vs. Scene (Perception)"),
-        Patch(facecolor="#4C78A8", alpha=0.8, label="Face vs. Scene (Working Memory)"),
+        Patch(facecolor="#F58518", alpha=0.8, label="Face vs. Scene (Encoding)"),
+        Patch(facecolor="#4C78A8", alpha=0.8, label="Face vs. Scene (Maintenance)"),
     ]
     ax.legend(handles=legend_elems, frameon=False, loc="upper left", bbox_to_anchor=(0, 0.2))
 

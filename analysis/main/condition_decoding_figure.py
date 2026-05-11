@@ -323,7 +323,7 @@ print("\n[Saved decoding_stats_feature_z.csv, decoding_stats_ccgp_z.csv, decodin
 # Figure 1: Feature / CCGP / XOR + ratio
 # =========================
 bar_cols = [0, 1, 2]
-bar_labels = ['Face vs Scene', 'CCGP (across P and WM)', 'XOR']
+bar_labels = ['Face vs Scene', 'CCGP', 'XOR']
 bar_colors = ['skyblue', 'deepskyblue', 'mediumpurple']
 width = 0.25
 N = len(bar_cols)
@@ -485,7 +485,7 @@ plot_configs = [
     {
         "name": "Feature(P/WM)",
         "cols": [5, 6],
-        "labels": ["Feature decoding (Perception only)", "Feature decoding (Working Memory only)"],
+        "labels": ["Feature decoding (Encoding only)", "Feature decoding (Maintenance only)"],
         "colors": ["lightgray", "dimgray"],
         "outfile": outdir / "figure_decoding_supple_feature_separate.png",
         "chance": CHANCE["Feature"]
