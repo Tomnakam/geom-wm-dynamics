@@ -471,6 +471,70 @@ plt.savefig(outdir / "figure_decoding_main.png", dpi=300, bbox_inches="tight")
 plt.close(fig)
 
 # =========================
+# Figure 1b: same as Figure 1 but without the cross-decoding ratio panel
+# =========================
+fig, ax1 = plt.subplots(figsize=(18, 6.5))
+
+for j, col in enumerate(bar_cols):
+    offset = (j - (N - 1) / 2) * width
+
+    ax1.bar(
+        x + offset, mean_values[:, col], width,
+        label=bar_labels[j], color=bar_colors[j],
+        edgecolor='black', linewidth=0.5
+    )
+
+    for s, marker in enumerate(markers_subjects[:n_subjects]):
+        c = subj_colors[s]
+        for r in range(n_roi):
+            px = x[r] + offset
+            py = all_array[s, r, col]
+            if subj_mask[r, j, s]:
+                ax1.scatter(px, py, facecolors=c, edgecolors=c,
+                            marker=marker, s=35, linewidth=0.8, alpha=0.85, zorder=5)
+            else:
+                ax1.scatter(px, py, facecolors='none', edgecolors=c,
+                            marker=marker, s=35, linewidth=1.5, alpha=0.85, zorder=5)
+
+ax1.set_ylabel('Decoding accuracy', fontsize=20)
+ax1.axhline(0.5, linestyle='--', color='gray', linewidth=1.5)
+ax1.set_ylim(0.4, 0.9)
+yt = np.round(np.arange(0.4, 0.91, 0.1), 1)
+ax1.set_yticks(yt)
+ax1.set_yticklabels([f"{t:.1f}" for t in yt], fontsize=16)
+ax1.grid(True, linestyle='--', alpha=0.5)
+
+ymin, ymax = ax1.get_ylim()
+star_margin = (ymax - ymin) * 0.025
+star_base = ymax + star_margin * 0.8
+star_step = star_margin * 0.9
+for r in range(n_roi):
+    for j in range(3):
+        stars = q_to_stars(qvals_group[r, j])
+        if stars:
+            ax1.text(x[r], star_base + j * star_step, stars,
+                     ha='center', va='bottom', fontsize=20,
+                     color=bar_colors[j], clip_on=False)
+
+filled = mlines.Line2D([], [], color='black', marker='o', linestyle='None',
+                       markersize=8, label='Significant')
+outline = mlines.Line2D([], [], color='black', marker='o', linestyle='None',
+                        markersize=8, markerfacecolor='none', label='Not significant')
+handles, labels_ = ax1.get_legend_handles_labels()
+handles += [filled, outline]
+ax1.legend(handles, labels_, loc='upper right',
+           frameon=True, fontsize=15, facecolor='white',
+           framealpha=0.8, edgecolor='gray', borderaxespad=0.8)
+
+ax1.set_xticks(x)
+ax1.set_xticklabels(roi_names, rotation=45, ha='right', fontsize=16)
+ax1.margins(x=0.01)
+
+fig.subplots_adjust(top=0.90, bottom=0.28)
+plt.savefig(outdir / "figure_decoding_main_no_ratio.png", dpi=300, bbox_inches="tight")
+plt.close(fig)
+
+# =========================
 # Figure 2/3: Task summary & Feature(P/WM) summary
 # =========================
 plot_configs = [
@@ -485,7 +549,7 @@ plot_configs = [
     {
         "name": "Feature(P/WM)",
         "cols": [5, 6],
-        "labels": ["Feature decoding (Encoding only)", "Feature decoding (Maintenance only)"],
+        "labels": ["Face vs. Scene decoding (Encoding only)", "Face vs. Scene decoding (Maintenance only)"],
         "colors": ["lightgray", "dimgray"],
         "outfile": outdir / "figure_decoding_supple_feature_separate.png",
         "chance": CHANCE["Feature"]

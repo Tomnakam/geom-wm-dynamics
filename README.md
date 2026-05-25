@@ -1,15 +1,15 @@
-# Representational-geometries-of-perception-and-working-memory
+# Representational-geometries-across-visual-working-memory-encoding-and-maintenance
 
 ## Preprint: 
 
 This is the code associated with the preprint:
-* [Nakamura, T., Yoo, S.B.M., Kay, K., Lau, H., Moharramipour, A. Representational geometries of perception and working memory. bioRxiv (2026)](https://doi.org/10.1101/2025.09.07.674590)
+* [Nakamura, T., Yoo, S.B.M., Kay, K., Lau, H., Moharramipour, A. Representational geometries across visual working memory encoding and maintenance. bioRxiv (2026)](https://doi.org/10.1101/2025.09.07.674590)
 
 If you use the code in your research, please cite this preprint.
 
 ## Installation Guide:
 ```bash
-git clone https://github.com/Tomnakam/Representational-geometries-of-perception-and-working-memory
+git clone https://github.com/Tomnakam/geom-wm-dynamics
 ```
 It will take a couple of minutes to install on normal desktop computer.
 
@@ -29,7 +29,7 @@ To run tradeoff_figure.py (Supplementary figures), Connectome Workbench (https:/
 
 ## Demo: 
 To quickly demonstrate how the analysis code is run,
-1) Run `analysis/main/angle_boostrap.py` with `demo = 1`  
+1) Run `analysis/main/angle_bootstrap.py` with `demo = 1`  
    → Produces the z-value in the angle analysis (square marker in Figure 2A; ~1 minute)
 2) Run `analysis/main/condition_decoding.py` with `demo = 1`  
    → Produces the face-vs-scene decoding accuracy, CCGP accuracy, XOR decoding accuracy (square marker in Figure 3) and tradeoff index (square marker in Figure 4; taking ~10 minutes) 
@@ -70,10 +70,10 @@ These are used for angle analysis.
 File name format: beta_condition_specific_{subID}_{sesID}.npz
 Format: Compressed NumPy archive (.npz)
 Each file contains four NumPy arrays, corresponding to:
-Face Perception
-Scene Perception
-Face Working Memory
-Scene Working Memory
+Face Encoding
+Scene Encoding
+Face Maintenance
+Scene Maintenance
 Each array has shape: (n_vertices, n_TRs)
 
 These are used for decoding analysis.

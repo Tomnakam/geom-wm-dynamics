@@ -163,6 +163,34 @@ fig_dm.savefig(design_dir / f"design_matrix_sub{subID}.png", dpi=300)
 plt.close(fig_dm)
 
 # =========================
+# VIF for task regressors of interest
+# (Face Perception, Scene Perception, Face WM, Scene WM)
+# Regress each target on all other columns (incl. motion/drift/constant).
+# =========================
+target_idx = [0, 1, 3, 4]  # Face Enc, Scene Enc, Face Maint, Scene Maint
+target_labels = ["Face Perception", "Scene Perception", "Face WM", "Scene WM"]
+
+vif_per_run = np.zeros((n_total_runs, len(target_idx)))
+for r, dm in enumerate(design_matrices):
+    Xall = dm.values
+    for j, ti in enumerate(target_idx):
+        y = Xall[:, ti]
+        Xo = np.delete(Xall, ti, axis=1)
+        beta, *_ = np.linalg.lstsq(Xo, y, rcond=None)
+        yhat = Xo @ beta
+        ss_res = np.sum((y - yhat) ** 2)
+        ss_tot = np.sum((y - y.mean()) ** 2)
+        r2 = 1.0 - ss_res / ss_tot if ss_tot > 0 else 0.0
+        vif_per_run[r, j] = 1.0 / (1.0 - r2) if r2 < 1.0 else np.inf
+
+vif_df = pd.DataFrame(vif_per_run, columns=target_labels)
+vif_df.index = [f"run{r + 1}" for r in range(n_total_runs)]
+vif_df.loc["mean"] = vif_df.mean()
+print("\nVIF (per run, plus mean):")
+print(vif_df.round(3))
+vif_df.to_csv(design_dir / f"VIF_sub{subID}.csv")
+
+# =========================
 # Prepare functional file lists (surface)
 # =========================
 file_namesR = [

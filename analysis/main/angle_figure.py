@@ -295,7 +295,7 @@ def make_main_figure(
 
     ax.set_xticks(x_bar)
     ax.set_xticklabels(roi_names, rotation=45, ha='right')
-    ax.set_ylabel('Z-score (rotation)', fontsize=14)
+    ax.set_ylabel('z-score (rotation)', fontsize=14)
 
     ax.text(-0.05, 1.02, 'A', fontsize=24, transform=ax.transAxes, va='top', ha='left')
 
