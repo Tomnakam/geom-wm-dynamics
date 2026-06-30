@@ -22,19 +22,56 @@ conda env create -f environment.yml
 conda activate analysis
 ```
 
-To run singl-trial GLM, [GLMsingle toolbox](https://github.com/cvnlab/GLMsingle) introduced in the following paper is alos required:
+The `environment.yml` above installs everything required to run the **demos** and the **main analyses** (which use precomputed beta maps).
+
+**GLMsingle is required only to regenerate beta maps from raw data** (`analysis/GLM/surfaceGLMsingle.py`). It is **not** needed for the demos or the main analyses. GLMsingle is not distributed on PyPI, so install it (together with its dependency `fracridge`) directly from GitHub:
+
+```bash
+pip install git+https://github.com/cvnlab/GLMsingle.git
+```
+
+See the [GLMsingle toolbox](https://github.com/cvnlab/GLMsingle) and the following paper:
 * [Prince, J.S., Charest, I., Kurzawski, J.W., Pyles, J.A., Tarr, M., Kay, K.N. Improving the accuracy of single-trial fMRI response estimates using GLMsingle. *eLife* (2022).](https://doi.org/10.7554/eLife.77599)
 
 To run tradeoff_figure.py (Supplementary figures), Connectome Workbench (https://www.humanconnectome.org/software/get-connectome-workbench) is required.
 
 ## Demo: 
-To quickly demonstrate how the analysis code is run,
-1) Run `analysis/main/angle_bootstrap.py` with `demo = 1`  
-   → Produces the z-value in the angle analysis (square marker in Figure 2A; ~1 minute)
-2) Run `analysis/main/condition_decoding.py` with `demo = 1`  
-   → Produces the face-vs-scene decoding accuracy, CCGP accuracy, XOR decoding accuracy (square marker in Figure 3) and tradeoff index (square marker in Figure 4; taking ~10 minutes) 
+The demos run on the bundled data for **sub-02, V1** only (`runwise_beta/beta_2_demo.pkl`, `single_beta/*_demo.npz`); no Zenodo download is required. Run them from the `analysis/main` directory:
 
-These demo analyses are performed for sub-02 in V1.
+```bash
+cd analysis/main
+```
+
+**1) Angle analysis** (~1 minute)
+```bash
+python angle_bootstrap.py
+# When prompted: demo? 0:No 1:Yes  ->  enter 1
+```
+Produces the z-value in the angle analysis (square marker in Figure 2A). Expected output on our setup:
+```
+=== DEMO RESULTS ===
+ subject: 2
+ z-value(primary visual): 6.57501755742384
+====================
+```
+
+**2) Decoding analysis** (~5-10 minutes)
+```bash
+python condition_decoding.py
+# When prompted: demo? 0:No 1:Yes  ->  enter 1
+```
+Produces the face-vs-scene decoding accuracy, CCGP accuracy, XOR decoding accuracy (square marker in Figure 3) and tradeoff index (square marker in Figure 4). Expected output on our setup:
+```
+=== DEMO RESULTS ===
+subject: 2
+Feature_Decoding_Accuracy          = 0.619141
+XOR_Decoding_Accuracy              = 0.585938
+CCGP_Feature_Decoding_Accuracy     = 0.525391
+Tradeoff index log(XOR/CCGP_Feat)  = 0.109071
+====================
+```
+(Values are reproducible given the fixed random seed; the last digits may vary slightly on a different BLAS/platform.)
+
 To reproduce the entire results, follow the instructions below (all betamaps shared on zenodo is required). 
 
 ## Rawdata
